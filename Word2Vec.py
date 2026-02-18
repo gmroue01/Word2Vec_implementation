@@ -10,7 +10,7 @@ class Word2Vec:
     def softmax(self,u,v):
         Similarity = np.exp(u@v.T)
         
-        Normalize = np.sum(self.word_center@v.T)
+        Normalize = np.sum(np.exp(self.word_center@v.T))
 
         return Similarity/Normalize
 
