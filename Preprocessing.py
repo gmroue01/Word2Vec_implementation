@@ -44,6 +44,18 @@ class preprocessing:
 
         logger.info(f"Voc list built. Size :{len(self.vocab)}")
 
+    def transform(self):
+        """
+        Transform the text into a array of index
+        
+        :param self: Description
+        """
+        text_index = []
+        for word in self.tokens:
+            text_index.append(self.word_to_idx[word])
+        return text_index
+    
+
     @property
     def vocab_size(self) -> int:
         return len(self.vocab)
