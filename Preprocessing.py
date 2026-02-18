@@ -36,9 +36,9 @@ class preprocessing:
 
         with open(self.file_path, "r", encoding="utf-8") as f:
             text = f.read().lower()  # Pour de très gros fichiers, préférez un stream
-            tokens = nltk.word_tokenize(text, language=self.language)
+            self.tokens = nltk.word_tokenize(text, language=self.language)
 
-        self.vocab = sorted(list(set(tokens)))
+        self.vocab = sorted(list(set(self.tokens)))
 
         self.word_to_idx = {word: idx for idx, word in enumerate(self.vocab)}
 
