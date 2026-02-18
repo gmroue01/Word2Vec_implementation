@@ -37,7 +37,7 @@ class preprocessing:
             text = f.read()  # Pour de très gros fichiers, préférez un stream
             tokens = nltk.word_tokenize(text, language=self.language)
 
-        self.vocab() = sorted(list(set(tokens)))
+        self.vocab = sorted(list(set(tokens)))
 
         self.word_to_idx = {word: idx for idx, word in enumerate(self.vocab)}
         self.idx_to_word = {idx: word for word, idx in enumerate(self.vocab)}
@@ -47,6 +47,10 @@ class preprocessing:
     @property
     def vocab_size(self) -> int:
         return len(self.vocab)
+
+    @property
+    def word_to_idx(self) -> Dict[str, int]:
+        return self.word_to_idx
 
 
 class EmbeddingIntitialiser:
@@ -70,3 +74,19 @@ class EmbeddingIntitialiser:
             (self.vocab_size, self.embedding_dim))
 
         return word_center, word_context
+
+
+if __name__ == "main":
+    preprocessor = preprocessing(r"data\text\pg17989.txt", "french")
+    preprocessor.fit()
+
+    intialiser = EmbeddingIntitialiser(
+        vocab_size=preprocessor.vocab_size,
+        embedding_dim=100,
+        seed=123
+    )
+
+    center_weights, context_weights = intialiser.initialize()
+
+    print(center_weights)
+    print("Hello !!")
