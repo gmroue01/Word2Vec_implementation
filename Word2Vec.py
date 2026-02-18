@@ -1,18 +1,22 @@
 import numpy as np
-from Preprocessing import preprocessing
+from Preprocessing import preprocessing, EmbeddingIntitialiser
+
+
 class Word2Vec:
 
-    def __init__(self,word_center,word_context):
+    def __init__(self, word_center, word_context):
         self.word_center = word_center
         self.word_context = word_context
 
+    def softmax(self, u, v):
+        Similarity = np.exp(u@v)
 
-    def softmax(self,u,v):
-        Similarity = np.exp(u@v.T)
-        
-        Normalize = np.sum(np.exp(self.word_center@v.T))
+        Normalize = np.sum(np.exp(self.word_center@v))
 
         return Similarity/Normalize
+
+    def loss(self):
+        
 
 
     def fit(self):
@@ -21,24 +25,28 @@ class Word2Vec:
     def predict(self):
         pass
 
-path = r"./data/text/pg17989.txt" 
 
-p = preprocessing(path, N=5)
+path = r"./data/text/pg17989.txt"
 
-print(p.word_center)
-print(p.word_context)
+preprocessor = preprocessing(path, "french")
+preprocessor.fit()
 
-word_index = p.word_index
-
-w = Word2Vec(p.word_center,p.word_context)
-
-index = word_index["manger"]
-print(index)
-
-u = p.word_center[index,:]
-v = p.word_center[index+1,:]
+initialiser = EmbeddingIntitialiser(
+    preprocessor.vocab_size,
+    embedding_dim=100,
+    seed=442
+)
+print(preprocessor.vocab)
+word_center, word_context = initialiser.initialize()
 
 
-r = w.softmax(u,v)
+index_u = preprocessor.word_to_idx['je']
+index_v = preprocessor.word_to_idx['suis']
+u = word_center[index_u, :]
+v = word_context[index_v, :]
 
-print(r)
+w = Word2Vec(word_center, word_context)
+
+r = w.softmax(u, v)
+
+
