@@ -2,10 +2,10 @@ import numpy as np
 from Preprocessing import preprocessing, EmbeddingIntitialiser
 
 
-class Word2Vec:
+class word2VecModel:
 
-    def __init__(self, text, word_center, word_context,max_iter,learning_rate):
-        self.text = text
+    def __init__(self, text_index, word_center, word_context,max_iter,learning_rate):
+        self.text_index = text_index
         self.word_center = word_center
         self.word_context = word_context
 

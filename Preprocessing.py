@@ -5,6 +5,9 @@ import os
 import logger
 import logging
 from typing import List, Dict, Tuple, Generator
+
+
+
 nltk.download('punkt')
 nltk.download('punkt_tab')
 
@@ -84,13 +87,5 @@ class EmbeddingIntitialiser:
         return word_center, word_context
 
 
-# preprocessor = preprocessing(r"data\text\pg17989.txt", "french")
-# preprocessor.fit()
 
-# intialiser = EmbeddingIntitialiser(
-#     vocab_size=preprocessor.vocab_size,
-#     embedding_dim=100,
-#     seed=123
-# )
 
-# center_weights, context_weights = intialiser.initialize()
